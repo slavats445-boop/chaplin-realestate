@@ -1,0 +1,163 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+locale: he
+
+collections:
+
+  - name: "properties"
+    label: "🏠 נכסים"
+    label_singular: "נכס"
+    folder: "content/properties"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - {label: "כותרת", name: "title", widget: "string"}
+      - label: "סוג"
+        name: "deal_type"
+        widget: "select"
+        options:
+          - {label: "למכירה", value: "sale"}
+          - {label: "להשכרה", value: "rent"}
+          - {label: "מסחרי למכירה", value: "commercial_sale"}
+          - {label: "מסחרי להשכרה", value: "commercial_rent"}
+      - {label: "מחיר (₪)", name: "price", widget: "number"}
+      - label: "הצגת מחיר"
+        name: "show_price"
+        widget: "select"
+        default: "show"
+        options:
+          - {label: "הצג מחיר", value: "show"}
+          - {label: "מחיר בפניה", value: "on_request"}
+      - {label: "כתובת", name: "address", widget: "string"}
+      - label: "עיר"
+        name: "city"
+        widget: "select"
+        options:
+          - "קריית מוצקין"
+          - "קריית אתא"
+          - "קריית ביאליק"
+          - "חיפה"
+          - "נשר"
+          - "עכו"
+          - "נהריה"
+          - "חדרה"
+          - "גאורגיה"
+          - "אחר"
+      - {label: "חדרים", name: "rooms", widget: "number", value_type: "float", step: 0.5}
+      - {label: "שטח מ\"ר", name: "size", widget: "number"}
+      - {label: "קומה", name: "floor", widget: "number", required: false}
+      - {label: "קומות בבניין", name: "total_floors", widget: "number", required: false}
+      - label: "מאפיינים"
+        name: "features"
+        widget: "select"
+        multiple: true
+        required: false
+        options:
+          - "מעלית"
+          - "חניה"
+          - "מרפסת"
+          - "גינה"
+          - "ממ\"ד"
+          - "מחסן"
+          - "שיפוץ מלא"
+          - "נוף לים"
+          - "בנייה חדשה"
+          - "פנטהאוז"
+      - {label: "תיאור", name: "description", widget: "text", required: false}
+      - {label: "תמונה ראשית", name: "main_image", widget: "image", required: false}
+      - label: "גלריה"
+        name: "gallery"
+        widget: "list"
+        required: false
+        field: {label: "תמונה", name: "image", widget: "image"}
+      - label: "סטטוס"
+        name: "status"
+        widget: "select"
+        default: "active"
+        options:
+          - {label: "פעיל — מוצג באתר", value: "active"}
+          - {label: "בתהליך", value: "pending"}
+          - {label: "נמכר / הושכר", value: "sold"}
+          - {label: "מוסתר", value: "hidden"}
+      - {label: "מומלץ (מוצג ראשון)", name: "featured", widget: "boolean", default: false}
+      - {label: "תאריך", name: "date", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false}
+
+  - name: "testimonials"
+    label: "⭐ המלצות"
+    label_singular: "המלצה"
+    folder: "content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - {label: "שם לקוח", name: "name", widget: "string"}
+      - {label: "פרטים (עיר, סוג עסקה)", name: "meta", widget: "string", hint: "למשל: קריית מוצקין · רכישת דירה"}
+      - {label: "טקסט ההמלצה", name: "quote", widget: "text"}
+      - label: "דירוג"
+        name: "stars"
+        widget: "select"
+        default: "5"
+        options:
+          - {label: "5 כוכבים", value: "5"}
+          - {label: "4 כוכבים", value: "4"}
+      - {label: "פעיל (מוצג באתר)", name: "active", widget: "boolean", default: true}
+      - {label: "תאריך", name: "date", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false}
+
+  - name: "blog"
+    label: "📝 בלוג"
+    label_singular: "מאמר"
+    folder: "content/blog"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    editor:
+      preview: false
+    fields:
+      - {label: "כותרת", name: "title", widget: "string"}
+      - label: "קטגוריה"
+        name: "category"
+        widget: "select"
+        options:
+          - "מיסוי"
+          - "משכנתאות"
+          - "השקעות"
+          - "שוק מקומי"
+          - "גאורגיה"
+          - "מדריכים"
+      - {label: "תקציר", name: "excerpt", widget: "text"}
+      - {label: "תוכן המאמר", name: "body", widget: "markdown"}
+      - {label: "זמן קריאה (דקות)", name: "read_time", widget: "number", default: 5}
+      - {label: "תמונת שער", name: "cover_image", widget: "image", required: false}
+      - {label: "פורסם?", name: "published", widget: "boolean", default: false}
+      - {label: "תאריך", name: "date", widget: "datetime", date_format: "DD/MM/YYYY", time_format: false}
+
+  - name: "settings"
+    label: "⚙️ הגדרות אתר"
+    editor:
+      preview: false
+    files:
+      - label: "תוכן ראשי"
+        name: "main"
+        file: "content/settings/main.json"
+        fields:
+          - {label: "כותרת ראשית", name: "hero_title", widget: "string", default: "סלבה צ'פלין"}
+          - {label: "תפקיד", name: "hero_role", widget: "string"}
+          - {label: "טקסט תיאור", name: "hero_pitch", widget: "text"}
+          - {label: "שנות ניסיון", name: "years_exp", widget: "number", default: 17}
+          - {label: "מספר עסקאות", name: "deals_count", widget: "string", default: "300+"}
+          - {label: "תמונת פרופיל", name: "hero_image", widget: "image", required: false}
+      - label: "פרטי קשר"
+        name: "contact"
+        file: "content/settings/contact.json"
+        fields:
+          - {label: "טלפון", name: "phone", widget: "string", default: "054-2999525"}
+          - {label: "אימייל", name: "email", widget: "string"}
+          - {label: "WhatsApp (בינלאומי)", name: "whatsapp", widget: "string", hint: "ללא + בהתחלה"}
+          - {label: "שעות פעילות", name: "hours", widget: "string"}
